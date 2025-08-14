@@ -17,7 +17,6 @@ logs
 logs/**/*.log
 
 # Build output
-dist/
 build/
 .next/
 out/
