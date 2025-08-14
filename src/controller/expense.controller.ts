@@ -33,11 +33,29 @@ export const addExpense = async (req: AuthRequest, res: Response) => {
 // Get all
 export const getExpenses = async (req: AuthRequest, res: Response) => {
   try {
-    const expenses = await Expense.find({ user: req.user!.id }).sort({
-      date: -1,
-    });
+    const filter: any = { user: req.user!.id };
+
+    // Filter
+    if (req.query.category) {
+      filter.category = req.query.category;
+    }
+
+    // ?from=2025-08-01&to=2025-08-14
+    const from = req.query.from ? new Date(req.query.from as string) : null;
+    const to = req.query.to ? new Date(req.query.to as string) : null;
+
+    if (from && to) {
+      filter.date = { $gte: from, $lte: to };
+    } else if (from) {
+      filter.date = { $gte: from };
+    } else if (to) {
+      filter.date = { $lte: to };
+    }
+
+    const expenses = await Expense.find(filter).sort({ date: -1 });
     res.json(expenses);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 };
