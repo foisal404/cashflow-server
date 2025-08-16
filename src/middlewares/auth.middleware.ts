@@ -11,9 +11,11 @@ export const isAuthenticated = async (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token)
+  const token = req.cookies.token;
+
+  if (!token) {
     return res.status(401).json({ message: "No token, authorization denied" });
+  }
 
   try {
     const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
