@@ -3,19 +3,20 @@ import cors from "cors";
 import { errorHandler } from "./middlewares/errorHandler";
 import authRoutes from "./routes/auth.routes";
 import expenseRoutes from "./routes/expense.routes";
+import cookieParser from "cookie-parser";
 
 const app = express();
+app.use(cookieParser());
 
-app.use(cors());
-app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "https://cashflow-newclient.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
+app.use(express.json());
 
 // Routes
 app.get("/", (req, res) => {

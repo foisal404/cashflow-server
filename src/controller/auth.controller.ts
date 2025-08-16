@@ -44,6 +44,18 @@ export const login = async (req: Request, res: Response) => {
         expiresIn: "1d",
       }
     );
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   secure: false,
+    //   sameSite: "lax",
+    //   maxAge: 24 * 60 * 60 * 1000,
+    // });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.json({ token });
   } catch (err: any) {
@@ -58,6 +70,26 @@ export const getProfile = async (req: AuthRequest, res: Response) => {
       return res.status(404).json({ message: "User not found" });
     }
     res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+export const logout = async (req: AuthRequest, res: Response) => {
+  try {
+    // res.clearCookie("token", {
+    //   httpOnly: true,
+    //   secure: false, // true if using HTTPS
+    //   sameSite: "lax",
+    //   path: "/",
+    // });
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+    });
+
+    res.json({ message: "Logged out successfully" });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
