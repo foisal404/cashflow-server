@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProfile = exports.login = exports.register = void 0;
+exports.logout = exports.getProfile = exports.login = exports.register = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("../config/config"));
@@ -38,6 +38,18 @@ const login = async (req, res) => {
         const token = jsonwebtoken_1.default.sign({ id: user._id, email: user.email }, config_1.default.jwtSecret, {
             expiresIn: "1d",
         });
+        // res.cookie("token", token, {
+        //   httpOnly: true,
+        //   secure: false,
+        //   sameSite: "lax",
+        //   maxAge: 24 * 60 * 60 * 1000,
+        // });
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            maxAge: 24 * 60 * 60 * 1000,
+        });
         res.json({ token });
     }
     catch (err) {
@@ -58,3 +70,24 @@ const getProfile = async (req, res) => {
     }
 };
 exports.getProfile = getProfile;
+const logout = async (req, res) => {
+    try {
+        // res.clearCookie("token", {
+        //   httpOnly: true,
+        //   secure: false, // true if using HTTPS
+        //   sameSite: "lax",
+        //   path: "/",
+        // });
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            path: "/",
+        });
+        res.json({ message: "Logged out successfully" });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+};
+exports.logout = logout;

@@ -8,15 +8,16 @@ const cors_1 = __importDefault(require("cors"));
 const errorHandler_1 = require("./middlewares/errorHandler");
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const expense_routes_1 = __importDefault(require("./routes/expense.routes"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
-app.use(express_1.default.json());
+app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "https://cashflow-newclient.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
 }));
+app.use(express_1.default.json());
 // Routes
 app.get("/", (req, res) => {
     res.send("CashFlow API is running!");

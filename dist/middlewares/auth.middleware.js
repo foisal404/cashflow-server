@@ -7,9 +7,10 @@ exports.isAuthenticated = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_model_1 = __importDefault(require("../models/User.model"));
 const isAuthenticated = async (req, res, next) => {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token)
+    const token = req.cookies.token;
+    if (!token) {
         return res.status(401).json({ message: "No token, authorization denied" });
+    }
     try {
         const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
         req.user = await User_model_1.default.findById(decoded.id).select("-password");
