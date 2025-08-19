@@ -48,7 +48,7 @@ const login = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            domain: "https://cashflow-newclient.vercel.app",
+            domain: "cashflow-newclient.vercel.app",
             maxAge: 24 * 60 * 60 * 1000,
         });
         res.json({ token });
@@ -83,7 +83,7 @@ const logout = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            domain: "https://cashflow-newclient.vercel.app",
+            domain: "cashflow-newclient.vercel.app",
             path: "/",
         });
         res.json({ message: "Logged out successfully" });
