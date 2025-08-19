@@ -54,7 +54,7 @@ export const login = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      domain: "https://cashflow-newclient.vercel.app",
+      domain: "cashflow-newclient.vercel.app",
       maxAge: 24 * 60 * 60 * 1000,
     });
 
@@ -87,7 +87,7 @@ export const logout = async (req: AuthRequest, res: Response) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      domain: "https://cashflow-newclient.vercel.app",
+      domain: "cashflow-newclient.vercel.app",
       path: "/",
     });
 
