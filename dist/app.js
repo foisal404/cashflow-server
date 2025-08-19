@@ -11,11 +11,20 @@ const expense_routes_1 = __importDefault(require("./routes/expense.routes"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
 app.use((0, cookie_parser_1.default)());
+// app.use(
+//   cors({
+//     origin: "https://cashflow-newclient.vercel.app",
+//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//     credentials: true,
+//   })
+// );
 app.use((0, cors_1.default)({
     origin: "https://cashflow-newclient.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie", "Set-Cookie"],
     credentials: true,
+    exposedHeaders: ["Set-Cookie", "Authorization"],
 }));
 app.use(express_1.default.json());
 // Routes
