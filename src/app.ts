@@ -20,19 +20,19 @@ app.use(
   cors({
     origin: "https://cashflow-newclient.vercel.app",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// set headers for you to be able to set cookies on the browser
-app.use((_, res, next) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://cashflow-newclient.vercel.app"
-  );
-  res.header("Access-Control-Allow-Headers", "*");
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
+app.options(
+  "*",
+  cors({
+    origin: "https://cashflow-newclient.vercel.app",
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 // Routes
