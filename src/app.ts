@@ -8,14 +8,31 @@ import cookieParser from "cookie-parser";
 const app = express();
 app.use(cookieParser());
 
+// app.use(
+//   cors({
+//     origin: "https://cashflow-newclient.vercel.app",
+//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//     credentials: true,
+//   })
+// );
 app.use(
   cors({
     origin: "https://cashflow-newclient.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
+
+// set headers for you to be able to set cookies on the browser
+app.use((_, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://cashflow-newclient.vercel.app"
+  );
+  res.header("Access-Control-Allow-Headers", "*");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 app.use(express.json());
 
 // Routes
