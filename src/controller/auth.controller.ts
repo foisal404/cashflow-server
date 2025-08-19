@@ -55,6 +55,8 @@ export const login = async (req: Request, res: Response) => {
       secure: true,
       sameSite: "none",
       maxAge: 24 * 60 * 60 * 1000,
+      domain: ".vercel.app",
+      path: "/",
     });
 
     res.json({ token });
@@ -82,11 +84,13 @@ export const logout = async (req: AuthRequest, res: Response) => {
     //   sameSite: "lax",
     //   path: "/",
     // });
+
     res.clearCookie("token", {
       httpOnly: true,
       secure: true,
       sameSite: "none",
       path: "/",
+      domain: ".vercel.app",
     });
 
     res.json({ message: "Logged out successfully" });
