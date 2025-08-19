@@ -22,14 +22,13 @@ app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
     origin: "https://cashflow-newclient.vercel.app",
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
 }));
-// set headers for you to be able to set cookies on the browser
-app.use((_, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://cashflow-newclient.vercel.app");
-    res.header("Access-Control-Allow-Headers", "*");
-    res.header("Access-Control-Allow-Credentials", "true");
-    next();
-});
+app.options("*", (0, cors_1.default)({
+    origin: "https://cashflow-newclient.vercel.app",
+    credentials: true,
+}));
 app.use(express_1.default.json());
 // Routes
 app.get("/", (req, res) => {
