@@ -47,7 +47,6 @@ const login = async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,
-            sameSite: "none",
             domain: "cashflow-newclient.vercel.app",
             maxAge: 24 * 60 * 60 * 1000,
         });
@@ -82,7 +81,6 @@ const logout = async (req, res) => {
         res.clearCookie("token", {
             httpOnly: true,
             secure: true,
-            sameSite: "none",
             domain: "cashflow-newclient.vercel.app",
             path: "/",
         });
